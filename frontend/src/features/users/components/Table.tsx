@@ -1,11 +1,12 @@
 import { Loader } from '../../../shared/components/Loader';
 import { Typography } from '../../../shared/components/Typography';
-import { useUsersTable } from '../hooks/useUsersTable';
+import { useUsersTableQuery } from '../hooks/useUsersTableQuery';
 import { useUserTableActions } from '../hooks/useUserTableActions';
+import type { User } from '../types';
 import { Pagination } from './Pagination';
 
 export const UsersTable = () => {
-  const { state } = useUsersTable();
+  const { data, isLoading, error, handlePageNumberChange, paginationState } = useUsersTableQuery();
   const { viewUserPosts } = useUserTableActions();
 
   return (
@@ -20,42 +21,52 @@ export const UsersTable = () => {
             </tr>
           </thead>
           <tbody className="h-auto overflow-y-auto">
-            {state.isLoading && (
-              <div className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <Loader color="gray" />
-              </div>
+            {isLoading && (
+              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                <td>
+                  <Loader color="gray" />
+                </td>
+              </tr>
             )}
-            {state.data.length > 0 &&
-              state.data.map((item) => (
+            {(data?.length ?? 0) > 0 &&
+              data?.map((user: User) => (
                 <tr
-                  onClick={() => viewUserPosts(item)}
-                  key={item.name}
+                  onClick={() => viewUserPosts(user)}
+                  key={user.id}
                   className="!h-11 cursor-pointer hover:bg-gray-100 border-b border-faded border-solid"
                 >
-                  <td className="text-text-default text-body text-left p-3">{item.name}</td>
-                  <td className="text-text-default text-body text-left p-3">{item.email}</td>
-                  <td className="text-text-default text-body text-left p-3">{item.address}</td>
+                  <td className="text-text-default text-body text-left p-3">{user.name}</td>
+                  <td className="text-text-default text-body text-left p-3">{user.email}</td>
+                  <td className="text-text-default text-body text-left p-3">{user.address}</td>
                 </tr>
               ))}
-            {!state.isLoading && !state.error && state.data.length === 0 && (
-              <div className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <Typography variant="body" className="text-faded">
-                  No data found
-                </Typography>
-              </div>
+            {!isLoading && !error && (data?.length ?? 0) === 0 && (
+              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                <td>
+                  <Typography variant="body" className="text-faded">
+                    No data found
+                  </Typography>
+                </td>
+              </tr>
             )}
-            {!state.isLoading && state.error && state.data.length === 0 && (
-              <div className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <Typography variant="body" className="text-red-300">
-                  Error fetching data. Please try again.
-                </Typography>
-              </div>
+            {!isLoading && error && (data?.length ?? 0) === 0 && (
+              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                <td>
+                  <Typography variant="body" className="text-red-300">
+                    Error fetching data. Please try again.
+                  </Typography>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
       </div>
       <div className="w-full h-[60px] pb-2 flex flex-col">
-        {!state.isLoading && !state.error && state.data.length > 0 && <Pagination />}
+        <Pagination
+          pageNumber={paginationState.pageNumber}
+          handlePageNumberChange={handlePageNumberChange}
+          totalPages={paginationState.totalUsers}
+        />
       </div>
     </div>
   );

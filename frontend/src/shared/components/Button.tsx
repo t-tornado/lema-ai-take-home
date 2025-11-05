@@ -25,9 +25,10 @@ interface IconButtonProps extends BaseButtonProps {
   position: 'before' | 'after';
 }
 
-type ButtonProps = BaseButtonProps | PaginationNavButtonProps;
+type ButtonProps = BaseButtonProps | PaginationNavButtonProps | IconButtonProps;
 
-const globalClassName = 'rounded-[6px] text-red-100';
+const globalClassName =
+  'rounded-[6px] text-red-100 disabled:opacity-50 disabled:cursor-not-allowed';
 const classNameMap: Record<ButtonVariant, string> = {
   primary:
     'inline-flex items-center justify-center px-4 py-3 bg-primary rounded-[8px] h-9 font-medium text-white text-body',
