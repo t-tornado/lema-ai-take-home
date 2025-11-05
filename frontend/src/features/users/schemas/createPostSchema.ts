@@ -5,6 +5,8 @@ export const createPostSchema = z.object({
   body: z.string().min(1, { message: 'Body is required' }),
 });
 
-export type CreatePostPayload = z.infer<typeof createPostSchema>;
+export type CreatePostFormPayload = z.infer<typeof createPostSchema>;
+
+export type CreatePostPayload = CreatePostFormPayload & { user_id: string };
 
 export type CreatePostErrors = z.core.$ZodIssue[];

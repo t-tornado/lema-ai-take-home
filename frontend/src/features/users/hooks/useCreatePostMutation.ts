@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { CreatePostPayload } from '../schemas/createPostSchema';
+import type { CreatePostFormPayload, CreatePostPayload } from '../schemas/createPostSchema';
 import type { Post } from '../types';
+import { alerts } from '../../../shared/alerts/notify';
 
 interface UseCreatePostMutationProps {
   setPosts: (posts: Post[]) => void;
@@ -23,12 +24,14 @@ export const useCreatePostMutation = ({
     },
   });
 
-  const handleCreatePost = async (payload: CreatePostPayload) => {
+  const handleCreatePost = async (payload: CreatePostFormPayload) => {
     const previousPosts = stalePosts;
     try {
-      const newPost = await createPost(payload);
+      const newPost = await createPost({ ...payload, user_id: userId });
       setPosts([...stalePosts, newPost]);
+      alerts.onSuccess('Post created successfully');
     } catch (error) {
+      alerts.onError('Failed to create post');
       setPosts(previousPosts);
       throw error;
     }

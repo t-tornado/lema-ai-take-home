@@ -5,3 +5,9 @@ export interface Post {
   body: string;
   created_at: string;
 }
+
+export interface CreatePostPayload {
+  title: string;
+  body: string;
+  user_id: number;
+}
