@@ -25,9 +25,7 @@ export const UsersTable = () => {
             <tr className="border-b border-faded border-solid">
               <th className="text-faded text-body text-left p-3">Full Name</th>
               <th className="text-faded text-body text-left p-3">Email Address</th>
-              <th className="w-[392px] overflow-hidden text-ellipsis text-faded text-body text-left p-3">
-                Address
-              </th>
+              <th className="w-[392px] text-faded text-body text-left p-3">Address</th>
             </tr>
           </thead>
           <tbody className="h-auto overflow-y-auto">
@@ -45,9 +43,11 @@ export const UsersTable = () => {
                   key={user.id}
                   className="!h-11 cursor-pointer hover:bg-gray-100 border-b border-faded border-solid"
                 >
-                  <td className="text-text-default text-body text-left p-3">{user.name}</td>
-                  <td className="text-text-default text-body text-left p-3">{user.email}</td>
-                  <td className="text-text-default text-body text-left p-3">
+                  <td className="text-text-default text-body text-left p-3 ">{user.name}</td>
+                  <td className="text-text-default text-body text-left p-3 truncate">
+                    {user.email}
+                  </td>
+                  <td className="text-text-default text-body text-left p-3 max-w-[392px] truncate">
                     {getAddressStr(user)}
                   </td>
                 </tr>
