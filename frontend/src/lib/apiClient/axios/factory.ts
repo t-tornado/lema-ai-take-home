@@ -8,6 +8,9 @@ export const createAxiosApiClient: ApiClientFactory<
 > = (baseURL: string, requestInterceptor, responseInterceptor) => {
   const instance = axios.create({
     baseURL,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   if (requestInterceptor) {

@@ -23,6 +23,7 @@ export const useDeletePostMutation = ({
       const updatedPosts = stalePosts.filter((post) => post.id !== postId);
       setPosts(updatedPosts);
       await deletePost(postId);
+      alerts.onSuccess('Post deleted successfully');
     } catch {
       setPosts(previousPosts);
       alerts.onError('Failed to delete post');

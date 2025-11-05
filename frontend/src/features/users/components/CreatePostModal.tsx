@@ -3,11 +3,11 @@ import { Typography } from '../../../shared/components/Typography';
 import { Input } from '../../../shared/components/Input';
 import { Textarea } from '../../../shared/components/Textarea';
 import { Button } from '../../../shared/components/Button';
-import type { CreatePostErrors, CreatePostPayload } from '../schemas/createPostSchema';
+import type { CreatePostErrors, CreatePostFormPayload } from '../schemas/createPostSchema';
 interface CreatePostModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: CreatePostPayload) => void;
+  onSubmit: (data: CreatePostFormPayload) => void;
   isLoading: boolean;
   errors: CreatePostErrors | null;
   title: string;

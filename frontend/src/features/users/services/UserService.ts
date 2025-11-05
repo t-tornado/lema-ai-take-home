@@ -32,8 +32,3 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
 };
 
 export const UserService = createUserService(UsersApiDataSource);
-
-/**
- *
- * Ut architecto voluptates qui quia tenetur.
- */
