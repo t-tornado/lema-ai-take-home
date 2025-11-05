@@ -12,6 +12,7 @@ export const useUserPostsPageMetadata = () => {
 
   useEffect(() => {
     if (state?.user && userId) {
+      setFetchUser(false);
       setMetadata({ user: state.user });
     } else if (userId) {
       setFetchUser(true);
@@ -22,6 +23,7 @@ export const useUserPostsPageMetadata = () => {
   useEffect(() => {
     if (data) {
       setMetadata({ user: data });
+      setFetchUser(false);
     }
   }, [data]);
 
