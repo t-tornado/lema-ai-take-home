@@ -60,7 +60,7 @@ export interface UserService {
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
   getUserByUserId: (userId: string) => Promise<GetUserByUserIdResponse>;
-  getUsersCount: () => Promise<{ count: number }>;
+  getUsersCount: () => Promise<GetUsersCountApiResponse>;
 }
 
 export interface UserDataSource {
@@ -69,7 +69,7 @@ export interface UserDataSource {
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
   getUserByUserId: (userId: string) => Promise<GetUserByUserIdResponse>;
-  getUsersCount: () => Promise<number>;
+  getUsersCount: () => Promise<GetUsersCountApiResponse>;
 }
 
 export type CreateUserServiceFn = (dataSource: UserDataSource) => UserService;
@@ -78,4 +78,8 @@ export interface UsersTablePaginationState {
   pageNumber: number;
   pageSize: number;
   totalUsers: number;
+}
+
+export interface GetUsersCountApiResponse {
+  count: number;
 }

@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 
 const PAGE_SIZE = 4;
 export const useUsersTableQuery = () => {
+  const [fetchUsersCount, setFetchUsersCount] = useState(true);
+
   const [paginationState, setPaginationState] = useState<UsersTablePaginationState>({
     pageNumber: 1,
     pageSize: PAGE_SIZE,
@@ -13,7 +15,7 @@ export const useUsersTableQuery = () => {
 
   const {
     data: resData,
-    isLoading,
+    isLoading: isLoadingUsers,
     error,
   } = useQuery({
     queryKey: ['users', paginationState],
@@ -24,15 +26,24 @@ export const useUsersTableQuery = () => {
       }),
   });
 
+  const { data: usersCount, isLoading: isLoadingUsersCount } = useQuery({
+    queryKey: ['users-count'],
+    queryFn: () => UserService.getUsersCount(),
+    enabled: fetchUsersCount,
+    select: (data) => data.count,
+  });
+  const isLoading = isLoadingUsersCount || isLoadingUsers;
+
   const handlePageNumberChange = (pageNumber: number) => {
     setPaginationState((prev) => ({ ...prev, pageNumber }));
   };
 
   useEffect(() => {
-    if (!isLoading && !error && resData?.totalUsers !== paginationState.totalUsers) {
-      setPaginationState((prev) => ({ ...prev, totalUsers: resData?.totalUsers ?? 0 }));
+    if (usersCount) {
+      setFetchUsersCount(false);
+      setPaginationState((prev) => ({ ...prev, totalUsers: usersCount ?? 0 }));
     }
-  }, [resData, isLoading, error, paginationState.totalUsers]);
+  }, [usersCount]);
 
   return {
     data: resData?.data,
