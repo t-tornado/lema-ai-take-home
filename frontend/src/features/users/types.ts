@@ -40,16 +40,16 @@ export interface GetUsersResponse {
 }
 export interface UserService {
   getUsers: (payload: GetUsersReqPayload) => Promise<GetUsersResponse>;
-  getUserPosts: (userId: number) => Promise<Post[]>;
+  getUserPosts: (userId: string) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
-  deletePost: (postId: number) => Promise<void>;
+  deletePost: (postId: string) => Promise<void>;
 }
 
 export interface UserDataSource {
   getUsers: (payload: GetUsersReqPayload) => Promise<GetUsersResponse>;
-  getUserPosts: (userId: number) => Promise<Post[]>;
+  getUserPosts: (userId: string) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
-  deletePost: (postId: number) => Promise<void>;
+  deletePost: (postId: string) => Promise<void>;
 }
 
 export type CreateUserServiceFn = (dataSource: UserDataSource) => UserService;
