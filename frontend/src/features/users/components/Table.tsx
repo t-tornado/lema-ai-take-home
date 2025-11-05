@@ -19,7 +19,7 @@ export const UsersTable = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="w-full relative flex-1 min-h-0 border border-separate border-faded border-solid rounded-[8px] overflow-y-auto">
+      <div className="w-full relative min-h-0 border border-separate border-faded border-solid rounded-[8px] overflow-y-auto">
         <table className="w-full h-auto table-auto">
           <thead className="h-11 sticky top-0 bg-white z-10">
             <tr className="border-b border-faded border-solid">
