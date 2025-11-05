@@ -14,7 +14,12 @@ import { UserService } from '../services/UserService';
 import { useCreatePostMutation } from '../hooks/useCreatePostMutation';
 
 export const UserPostsPage = () => {
-  const { metadata, userId } = useUserPostsPageMetadata();
+  const {
+    metadata,
+    userId,
+    isLoading: isFetchingUser,
+    error: userError,
+  } = useUserPostsPageMetadata();
   const { data, isLoading, error, setPosts } = useUserPostsQuery(userId);
   const { handleDeletePost } = useDeletePostMutation({
     setPosts,
@@ -32,31 +37,35 @@ export const UserPostsPage = () => {
   const { title, body, handleTitleChange, handleBodyChange, handleSubmit, errors } =
     useCreatePostModalForm(handleCreatePost);
 
+  const dataIsLoading = (isLoading && !error && !data) || isFetchingUser;
+  const dataIsReady = !dataIsLoading && !userError && metadata.user;
+  const dataError = !dataIsLoading && userError && !metadata.user;
+
   return (
     <PageLayout>
-      {isLoading && !error && !data && (
+      {dataIsLoading && (
         <div className="w-full h-full flex items-center justify-center">
           <Loader color="gray" />
         </div>
       )}
-      {!isLoading && error && (
+      {dataError && (
         <div className="w-full h-full flex items-center justify-center">
           <Typography variant="body" className="text-faded">
             Error loading posts
           </Typography>
         </div>
       )}
-      {!isLoading && !error && data && (
+      {dataIsReady && (
         <Fragment>
           <Header user={metadata.user} postsCount={data?.length ?? 0} />
           <main className="w-full flex flex-wrap gap-4 pt-11 overflow-y-auto">
             {metadata.user ? (
-              <>
+              <Fragment>
                 <CreatePost handleOpen={() => setOpen(true)} />
                 {data?.map((post, idx) => (
                   <PostCard key={idx} data={post} onDelete={handleDeletePost} />
                 ))}
-              </>
+              </Fragment>
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <Loader color="gray" />

@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Loader } from '../../../shared/components/Loader';
 import { Typography } from '../../../shared/components/Typography';
 import { useUsersTableQuery } from '../hooks/useUsersTableQuery';
@@ -9,6 +10,13 @@ export const UsersTable = () => {
   const { data, isLoading, error, handlePageNumberChange, paginationState } = useUsersTableQuery();
   const { viewUserPosts } = useUserTableActions();
 
+  const getAddressStr = useCallback((user: User) => {
+    const address = user.address;
+    if (!address) return '';
+    const { street, state, city, zipcode } = address;
+    return `${street}, ${state}, ${city}, ${zipcode}`;
+  }, []);
+
   return (
     <div className="w-full h-full flex flex-col">
       <div className="w-full relative flex-1 min-h-0 border border-separate border-faded border-solid rounded-[8px] overflow-y-auto">
@@ -17,7 +25,9 @@ export const UsersTable = () => {
             <tr className="border-b border-faded border-solid">
               <th className="text-faded text-body text-left p-3">Full Name</th>
               <th className="text-faded text-body text-left p-3">Email Address</th>
-              <th className="w-[392px] text-faded text-body text-left p-3">Address</th>
+              <th className="w-[392px] overflow-hidden text-ellipsis text-faded text-body text-left p-3">
+                Address
+              </th>
             </tr>
           </thead>
           <tbody className="h-auto overflow-y-auto">
@@ -37,7 +47,9 @@ export const UsersTable = () => {
                 >
                   <td className="text-text-default text-body text-left p-3">{user.name}</td>
                   <td className="text-text-default text-body text-left p-3">{user.email}</td>
-                  <td className="text-text-default text-body text-left p-3">{user.address}</td>
+                  <td className="text-text-default text-body text-left p-3">
+                    {getAddressStr(user)}
+                  </td>
                 </tr>
               ))}
             {!isLoading && !error && (data?.length ?? 0) === 0 && (

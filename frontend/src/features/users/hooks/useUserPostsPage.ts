@@ -1,19 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import type { User } from '../types';
+import { useGetUserQuery } from './useGetUserQuery';
 
 export const useUserPostsPageMetadata = () => {
   const { userId } = useParams();
   const { state } = useLocation();
+  const [fetchUser, setFetchUser] = useState(false);
   const [metadata, setMetadata] = useState<{ user: User | null }>({ user: null });
+  const { data, isLoading, error } = useGetUserQuery({ userId: userId ?? '', enabled: fetchUser });
 
   useEffect(() => {
     if (state?.user && userId) {
       setMetadata({ user: state.user });
     } else if (userId) {
+      setFetchUser(true);
       // fetch users here
     }
   }, [state, userId]);
 
-  return { metadata, userId };
+  useEffect(() => {
+    if (data) {
+      setMetadata({ user: data });
+    }
+  }, [data]);
+
+  return { metadata, userId, isLoading, error };
 };

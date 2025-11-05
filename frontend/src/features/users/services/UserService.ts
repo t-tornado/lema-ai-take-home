@@ -23,11 +23,16 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
     return dataSource.deletePost(postId);
   };
 
+  const getUserByUserId = async (userId: string) => {
+    return dataSource.getUserByUserId(userId);
+  };
+
   return {
     getUsers,
     getUserPosts,
     createPost,
     deletePost,
+    getUserByUserId,
   };
 };
 

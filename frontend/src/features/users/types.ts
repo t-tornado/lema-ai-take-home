@@ -1,10 +1,19 @@
 import type { CreatePostPayload } from './schemas/createPostSchema';
 
+export interface UserAddress {
+  id: string;
+  user_id: string;
+  street: string;
+  state: string;
+  city: string;
+  zipcode: string;
+}
+
 export interface User {
   id: string;
   name: string;
   email: string;
-  address: string;
+  address: UserAddress | null;
 }
 
 export interface UserTableState {
@@ -21,6 +30,7 @@ export interface UserTableState {
   nextPage: number;
   previousPage: number;
 }
+
 export interface Post {
   id: string;
   user_id: number;
@@ -38,11 +48,13 @@ export interface GetUsersResponse {
   data: User[];
   totalUsers: number;
 }
+
 export interface UserService {
   getUsers: (payload: GetUsersReqPayload) => Promise<GetUsersResponse>;
   getUserPosts: (userId: string) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
+  getUserByUserId: (userId: string) => Promise<User>;
 }
 
 export interface UserDataSource {
@@ -50,6 +62,7 @@ export interface UserDataSource {
   getUserPosts: (userId: string) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
+  getUserByUserId: (userId: string) => Promise<User>;
 }
 
 export type CreateUserServiceFn = (dataSource: UserDataSource) => UserService;
