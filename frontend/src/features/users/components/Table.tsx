@@ -5,10 +5,17 @@ import { useUsersTableQuery } from '../hooks/useUsersTableQuery';
 import { useUserTableActions } from '../hooks/useUserTableActions';
 import type { User } from '../types';
 import { Pagination } from './Pagination';
+import { Button } from '../../../shared/components/Button';
 
 export const UsersTable = () => {
-  const { data, isLoading, error, handlePageNumberChange, paginationState } = useUsersTableQuery();
+  const { data, isLoading, error, handlePageNumberChange, paginationState, refetchData } =
+    useUsersTableQuery();
   const { viewUserPosts } = useUserTableActions();
+
+  const dataIsLoading = isLoading;
+  const dataIsError = error;
+  const dataIsReady = !dataIsLoading && !dataIsError && (data?.length ?? 0) > 0;
+  const dataIsEmpty = !dataIsLoading && !dataIsError && (data?.length ?? 0) === 0;
 
   const getAddressStr = useCallback((user: User) => {
     const address = user.address;
@@ -29,14 +36,16 @@ export const UsersTable = () => {
             </tr>
           </thead>
           <tbody className="h-auto overflow-y-auto">
-            {isLoading && (
-              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <td>
-                  <Loader color="gray" />
+            {dataIsLoading && (
+              <tr>
+                <td colSpan={3} className="h-[200px]">
+                  <div className="h-full flex items-center justify-center">
+                    <Loader color="gray" />
+                  </div>
                 </td>
               </tr>
             )}
-            {(data?.length ?? 0) > 0 &&
+            {dataIsReady &&
               data?.map((user: User) => (
                 <tr
                   onClick={() => viewUserPosts(user)}
@@ -52,21 +61,28 @@ export const UsersTable = () => {
                   </td>
                 </tr>
               ))}
-            {!isLoading && !error && (data?.length ?? 0) === 0 && (
-              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <td>
-                  <Typography variant="body" className="text-faded">
-                    No data found
-                  </Typography>
+            {dataIsEmpty && (
+              <tr>
+                <td colSpan={3} className="h-[200px]">
+                  <div className="h-full flex gap-y-2 items-center justify-center">
+                    <Typography variant="body" className="text-faded">
+                      No data found
+                    </Typography>
+                  </div>
                 </td>
               </tr>
             )}
-            {!isLoading && error && (data?.length ?? 0) === 0 && (
-              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <td>
-                  <Typography variant="body" className="text-red-300">
-                    Error fetching data. Please try again.
-                  </Typography>
+            {dataIsError && (
+              <tr>
+                <td colSpan={3} className="h-[200px]">
+                  <div className="h-full flex flex-col gap-y-2 items-center justify-center">
+                    <Typography variant="body" className="text-red-300">
+                      Error fetching data. Please try again.
+                    </Typography>
+                    <Button variant="primary" className="bg-red-400" onClick={refetchData}>
+                      Try again
+                    </Button>
+                  </div>
                 </td>
               </tr>
             )}
