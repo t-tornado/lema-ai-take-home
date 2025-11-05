@@ -10,7 +10,6 @@ interface PaginationProps {
 }
 
 export const Pagination = ({ pageNumber, handlePageNumberChange, totalPages }: PaginationProps) => {
-  console.log('AAA', pageNumber, totalPages);
   const hasPreviousPage = pageNumber > 1;
   const hasNextPage = pageNumber < totalPages;
 

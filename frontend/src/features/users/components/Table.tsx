@@ -22,9 +22,11 @@ export const UsersTable = () => {
           </thead>
           <tbody className="h-auto overflow-y-auto">
             {isLoading && (
-              <div className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <Loader color="gray" />
-              </div>
+              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                <td>
+                  <Loader color="gray" />
+                </td>
+              </tr>
             )}
             {(data?.length ?? 0) > 0 &&
               data?.map((user: User) => (
@@ -38,19 +40,23 @@ export const UsersTable = () => {
                   <td className="text-text-default text-body text-left p-3">{user.address}</td>
                 </tr>
               ))}
-            {isLoading && !error && (data?.length ?? 0) === 0 && (
-              <div className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <Typography variant="body" className="text-faded">
-                  No data found
-                </Typography>
-              </div>
+            {!isLoading && !error && (data?.length ?? 0) === 0 && (
+              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                <td>
+                  <Typography variant="body" className="text-faded">
+                    No data found
+                  </Typography>
+                </td>
+              </tr>
             )}
             {!isLoading && error && (data?.length ?? 0) === 0 && (
-              <div className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <Typography variant="body" className="text-red-300">
-                  Error fetching data. Please try again.
-                </Typography>
-              </div>
+              <tr className="absolute top-[50%] flex items-center justify-center w-full h-full left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                <td>
+                  <Typography variant="body" className="text-red-300">
+                    Error fetching data. Please try again.
+                  </Typography>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
@@ -59,7 +65,7 @@ export const UsersTable = () => {
         <Pagination
           pageNumber={paginationState.pageNumber}
           handlePageNumberChange={handlePageNumberChange}
-          totalPages={paginationState.totalPages}
+          totalPages={paginationState.totalUsers}
         />
       </div>
     </div>

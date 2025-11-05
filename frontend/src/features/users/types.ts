@@ -34,15 +34,19 @@ export interface GetUsersReqPayload {
   pageSize: number;
 }
 
+export interface GetUsersResponse {
+  data: User[];
+  totalUsers: number;
+}
 export interface UserService {
-  getUsers: (payload: GetUsersReqPayload) => Promise<User[]>;
+  getUsers: (payload: GetUsersReqPayload) => Promise<GetUsersResponse>;
   getUserPosts: (userId: number) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: number) => Promise<void>;
 }
 
 export interface UserDataSource {
-  getUsers: (payload: GetUsersReqPayload) => Promise<User[]>;
+  getUsers: (payload: GetUsersReqPayload) => Promise<GetUsersResponse>;
   getUserPosts: (userId: number) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: number) => Promise<void>;
@@ -53,5 +57,5 @@ export type CreateUserServiceFn = (dataSource: UserDataSource) => UserService;
 export interface UsersTablePaginationState {
   pageNumber: number;
   pageSize: number;
-  totalPages: number;
+  totalUsers: number;
 }

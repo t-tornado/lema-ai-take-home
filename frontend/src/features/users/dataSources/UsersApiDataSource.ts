@@ -1,11 +1,12 @@
-import type { CreateUserDataSourceFn, Post, User } from '../types';
+import type { GetUsersResponse, Post } from '../types';
 import type { GetUsersReqPayload } from '../types';
 import type { CreatePostPayload } from '../schemas/createPostSchema';
 import { apiClient } from '../../../lib/apiClient';
+import type { BaseApiClient } from '../../../lib/apiClient/base';
 
-const createUserDataSource: CreateUserDataSourceFn = (apiClient) => {
+const createUserDataSource = (apiClient: BaseApiClient) => {
   const getUsers = async (payload: GetUsersReqPayload) => {
-    return apiClient?.get<User[]>(
+    return apiClient?.get<GetUsersResponse>(
       `/users?pageNumber=${payload.pageNumber}&pageSize=${payload.pageSize}`,
     );
   };
