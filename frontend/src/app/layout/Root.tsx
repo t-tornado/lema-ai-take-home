@@ -6,7 +6,7 @@ interface RootLayoutProps {
 
 export const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <div className="flex flex-col w-screen h-screen bg-page-default">
+    <div className="w-full h-full overflow-hidden">
       {children}
       <ToastContainer
         position="top-right"

@@ -10,7 +10,7 @@ interface PostCardProps {
 
 export const PostCard = ({ data, onDelete }: PostCardProps) => {
   return (
-    <div className="relative w-[270px] h-[293px] flex-shrink-0 overflow-hidden bg-white text-text-default font-bold text-body border border-dashed border-faded rounded-[8px] flex flex-col gap-y-4 p-6">
+    <div className="relative w-full md:w-[270px] h-[293px] overflow-hidden bg-white text-text-default font-bold text-body border border-dashed border-faded rounded-[8px] flex flex-col gap-y-4 p-6">
       <div className="w-full flex flex-col gap-y-2">
         <Typography variant="subtitle">{data.title}</Typography>
         <Button

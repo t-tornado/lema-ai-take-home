@@ -58,7 +58,7 @@ export const UserPostsPage = () => {
       {dataIsReady && (
         <Fragment>
           <Header user={metadata.user} postsCount={data?.length ?? 0} />
-          <main className="w-full flex flex-wrap gap-4 pt-11 overflow-y-auto">
+          <main className="min-w-0 w-full flex-1 h-full flex flex-wrap p-5 min-w-0 min-h-0 md:pt-10 overflow-y-auto gap-6 ">
             {metadata.user ? (
               <Fragment>
                 <CreatePost handleOpen={() => setOpen(true)} />
