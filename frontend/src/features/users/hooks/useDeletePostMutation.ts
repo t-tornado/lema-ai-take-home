@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import type { Post } from '../types';
+import { alerts } from '../../../shared/alerts/notify';
 
 interface UseDeletePostProps {
   setPosts: (posts: Post[]) => void;
@@ -22,9 +23,9 @@ export const useDeletePostMutation = ({
       const updatedPosts = stalePosts.filter((post) => post.id !== postId);
       setPosts(updatedPosts);
       await deletePost(postId);
-    } catch (error) {
+    } catch {
       setPosts(previousPosts);
-      console.error(error);
+      alerts.onError('Failed to delete post');
     }
   };
 
