@@ -7,12 +7,10 @@ interface UseGetUserQueryProps {
 }
 
 export const useGetUserQuery = ({ userId, enabled }: UseGetUserQueryProps) => {
-  const { data, isLoading, error } = useQuery({
+  return useQuery({
     queryKey: ['user', userId],
     queryFn: () => UserService.getUserByUserId(userId),
     enabled,
     select: (data) => data.data,
   });
-
-  return { data, isLoading, error };
 };

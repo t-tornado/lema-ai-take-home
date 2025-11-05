@@ -17,6 +17,7 @@ export const useUsersTableQuery = () => {
     data: resData,
     isLoading: isLoadingUsers,
     error,
+    refetch,
   } = useQuery({
     queryKey: ['users', paginationState],
     queryFn: () =>
@@ -26,7 +27,11 @@ export const useUsersTableQuery = () => {
       }),
   });
 
-  const { data: usersCount, isLoading: isLoadingUsersCount } = useQuery({
+  const {
+    data: usersCount,
+    isLoading: isLoadingUsersCount,
+    refetch: refetchUsersCount,
+  } = useQuery({
     queryKey: ['users-count'],
     queryFn: () => UserService.getUsersCount(),
     enabled: fetchUsersCount,
@@ -36,6 +41,15 @@ export const useUsersTableQuery = () => {
 
   const handlePageNumberChange = (pageNumber: number) => {
     setPaginationState((prev) => ({ ...prev, pageNumber }));
+  };
+
+  const refetchData = () => {
+    if (!paginationState.totalUsers) {
+      refetchUsersCount();
+    }
+    if (!resData?.data) {
+      refetch();
+    }
   };
 
   useEffect(() => {
@@ -51,5 +65,6 @@ export const useUsersTableQuery = () => {
     error,
     handlePageNumberChange,
     paginationState,
+    refetchData,
   };
 };
