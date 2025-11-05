@@ -11,6 +11,8 @@ export const useUserPostsPageMetadata = () => {
   const { data, isLoading, error } = useGetUserQuery({ userId: userId ?? '', enabled: fetchUser });
 
   useEffect(() => {
+    console.log('state', state);
+    console.log('userId', userId);
     if (state?.user && userId) {
       setFetchUser(false);
       setMetadata({ user: state.user });
