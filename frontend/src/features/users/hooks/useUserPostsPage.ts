@@ -14,14 +14,11 @@ export const useUserPostsPageMetadata = () => {
   });
 
   useEffect(() => {
-    console.log('state', state);
-    console.log('userId', userId);
     if (state?.user && userId) {
       setFetchUser(false);
       setMetadata({ user: state.user });
     } else if (userId) {
       setFetchUser(true);
-      // fetch users here
     }
   }, [state, userId]);
 
