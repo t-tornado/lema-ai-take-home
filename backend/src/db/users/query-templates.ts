@@ -5,7 +5,50 @@ ORDER BY name
 LIMIT ?, ?
 `;
 
+export const selectUsersWithAddressesTemplate = `
+SELECT 
+  users.id,
+  users.name,
+  users.username,
+  users.email,
+  users.phone,
+  addresses.id as address_id,
+  addresses.user_id,
+  addresses.street,
+  addresses.state,
+  addresses.city,
+  addresses.zipcode
+FROM users
+LEFT JOIN addresses ON users.id = addresses.user_id
+ORDER BY users.name
+LIMIT ?, ?
+`;
+
 export const selectCountOfUsersTemplate = `
 SELECT COUNT(*) as count
 FROM users
+`;
+
+export const getUserByUserIdTemplate = `
+SELECT *
+FROM users
+WHERE id = ?
+`;
+
+export const getUserByUserIdWithAddressTemplate = `
+SELECT 
+  users.id,
+  users.name,
+  users.username,
+  users.email,
+  users.phone,
+  addresses.id as address_id,
+  addresses.user_id,
+  addresses.street,
+  addresses.state,
+  addresses.city,
+  addresses.zipcode
+FROM users
+LEFT JOIN addresses ON users.id = addresses.user_id
+WHERE users.id = ?
 `;

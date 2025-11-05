@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 
-import { getUsers, getUsersCount } from "../db/users/users";
+import { getUserByUserId, getUsers, getUsersCount } from "../db/users/users";
 
 const router = Router();
 
@@ -21,4 +21,13 @@ router.get("/count", async (req: Request, res: Response) => {
   res.send({ count });
 });
 
+router.get("/:userId", async (req: Request, res: Response) => {
+  const userId = req.params.userId;
+  const user = await getUserByUserId(userId);
+  if (!user) {
+    res.status(404).send({ message: "User not found" });
+    return;
+  }
+  res.send({ status: "success", data: user });
+});
 export default router;
