@@ -49,12 +49,17 @@ export interface GetUsersResponse {
   totalUsers: number;
 }
 
+export interface GetUserByUserIdResponse {
+  data: User;
+  status: string;
+}
+
 export interface UserService {
   getUsers: (payload: GetUsersReqPayload) => Promise<GetUsersResponse>;
   getUserPosts: (userId: string) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
-  getUserByUserId: (userId: string) => Promise<User>;
+  getUserByUserId: (userId: string) => Promise<GetUserByUserIdResponse>;
 }
 
 export interface UserDataSource {
@@ -62,7 +67,7 @@ export interface UserDataSource {
   getUserPosts: (userId: string) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
-  getUserByUserId: (userId: string) => Promise<User>;
+  getUserByUserId: (userId: string) => Promise<UsGetUserByUserIdResponseer>;
 }
 
 export type CreateUserServiceFn = (dataSource: UserDataSource) => UserService;
