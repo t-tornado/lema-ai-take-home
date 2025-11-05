@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  createPostSchema,
-  type CreatePostErrors,
-  type CreatePostFormPayload,
-} from '../schemas/createPostSchema';
+import { type CreatePostErrors, type CreatePostFormPayload } from '../schemas/createPostSchema';
 
 export const useCreatePostModalForm = (onSubmit: (data: CreatePostFormPayload) => void) => {
   const [title, setTitle] = useState('');
@@ -18,16 +14,15 @@ export const useCreatePostModalForm = (onSubmit: (data: CreatePostFormPayload) =
   };
 
   const handleSubmit = async (data: CreatePostFormPayload) => {
-    setErrors(null);
-    const result = createPostSchema.safeParse(data);
-    if (!result.success) {
-      setErrors(result.error.issues);
-      return;
+    try {
+      setErrors(null);
+      await onSubmit(data);
+      setTitle('');
+      setBody('');
+    } catch (error) {
+      setErrors(error as CreatePostErrors);
+      throw error;
     }
-    await onSubmit(data);
-    setTitle('');
-    setBody('');
-    setErrors(null);
   };
 
   return {

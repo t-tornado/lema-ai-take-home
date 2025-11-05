@@ -14,6 +14,8 @@ interface CreatePostModalProps {
   body: string;
   handleTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleBodyChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSuccess: () => void;
+  onError: (error: unknown) => void;
 }
 
 export const CreatePostModal = ({
@@ -25,11 +27,18 @@ export const CreatePostModal = ({
   body,
   handleTitleChange,
   handleBodyChange,
+  onSuccess,
+  onError,
 }: CreatePostModalProps) => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    await onSubmit({ title, body });
-    onClose();
+    try {
+      e.preventDefault();
+      await onSubmit({ title, body });
+      onSuccess?.();
+      onClose();
+    } catch (error) {
+      onError?.(error);
+    }
   };
   return (
     <Modal

@@ -10,6 +10,7 @@ export const RootLayout = ({ children }: RootLayoutProps) => {
       {children}
       <ToastContainer
         position="top-right"
+        className={'z-[99999]'}
         autoClose={3000}
         hideProgressBar={true}
         newestOnTop={false}

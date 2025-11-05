@@ -13,6 +13,7 @@ import { useDeletePostMutation } from '../hooks/useDeletePostMutation';
 import { UserService } from '../services/UserService';
 import { useCreatePostMutation } from '../hooks/useCreatePostMutation';
 import { Button } from '../../../shared/components/Button';
+import { alerts } from '../../../shared/alerts/notify';
 
 export const UserPostsPage = () => {
   const {
@@ -99,6 +100,12 @@ export const UserPostsPage = () => {
         body={body}
         handleTitleChange={handleTitleChange}
         handleBodyChange={handleBodyChange}
+        onSuccess={() => {
+          alerts.onSuccess('Post created successfully');
+        }}
+        onError={() => {
+          alerts.onError('Failed to create post');
+        }}
       />
     </PageLayout>
   );
