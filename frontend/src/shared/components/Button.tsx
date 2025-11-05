@@ -3,7 +3,13 @@ import { cn } from '../../lib/utils/cn';
 import { useMemo } from 'react';
 import { Loader } from './Loader';
 
-type ButtonVariant = 'primary' | 'cancel' | 'pagination' | 'pagination-active' | 'pagination-nav';
+type ButtonVariant =
+  | 'primary'
+  | 'cancel'
+  | 'pagination'
+  | 'pagination-active'
+  | 'pagination-nav'
+  | 'ghost';
 type ButtonSize = 'small' | 'medium' | 'large';
 
 type PaginationNavDirection = 'previous' | 'next';
@@ -28,7 +34,7 @@ interface IconButtonProps extends BaseButtonProps {
 type ButtonProps = BaseButtonProps | PaginationNavButtonProps | IconButtonProps;
 
 const globalClassName =
-  'rounded-[6px] text-red-100 disabled:opacity-50 disabled:cursor-not-allowed';
+  'rounded-[6px] text-text-default disabled:opacity-50 disabled:cursor-not-allowed';
 const classNameMap: Record<ButtonVariant, string> = {
   primary:
     'inline-flex items-center justify-center px-4 py-3 bg-primary rounded-[8px] h-9 font-medium text-white text-body',
@@ -38,6 +44,7 @@ const classNameMap: Record<ButtonVariant, string> = {
   pagination: 'text-text-default text-body w-8 h-8 bg-white hover:bg-gray-100',
   'pagination-nav':
     'text-text-default text-body w-fit px-4 flex items-center justify-center h-8 bg-white hover:bg-gray-100 text-body',
+  ghost: 'hover:bg-gray-100 p-1',
 };
 
 export const Button = ({

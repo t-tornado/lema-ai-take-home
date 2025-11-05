@@ -11,7 +11,7 @@ const createUserDataSource = (apiClient: BaseApiClient) => {
     );
   };
 
-  const getUserPosts = async (userId: number) => {
+  const getUserPosts = async (userId: string) => {
     return apiClient?.get<Post[]>(`/posts?userId=${userId}`);
   };
 
@@ -19,7 +19,7 @@ const createUserDataSource = (apiClient: BaseApiClient) => {
     return apiClient?.post<Post>(`/posts`, payload);
   };
 
-  const deletePost = async (postId: number) => {
+  const deletePost = async (postId: string) => {
     return apiClient?.delete<void>(`/posts/${postId}`);
   };
 

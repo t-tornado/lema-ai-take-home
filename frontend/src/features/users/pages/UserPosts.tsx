@@ -1,160 +1,75 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { PageLayout } from '../../../shared/components/PageLayout';
 import { CreatePost } from '../components/CreatePost';
 import { Header } from '../components/Header';
 import { PostCard } from '../components/PostCard';
-import type { Post } from '../types';
 import { CreatePostModal } from '../components/CreatePostModal';
 import { useCreatePostModalForm } from '../hooks/useCreatePostModalForm';
-
-const posts: Post[] = [
-  {
-    id: '1',
-    user_id: 1,
-    title: 'Post 1',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-01',
-  },
-  {
-    id: '2',
-    user_id: 1,
-    title: 'Post 2',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-02',
-  },
-  {
-    id: '3',
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3',
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3',
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3',
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3',
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1 as number,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-  {
-    id: '3' as string,
-    user_id: 1,
-    title: 'Post 3',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    created_at: '2021-01-03',
-  },
-];
+import { useUserPostsPageMetadata } from '../hooks/useUserPostsPage';
+import { Loader } from '../../../shared/components/Loader';
+import { useUserPostsQuery } from '../hooks/useUserPostsQuery';
+import { Typography } from '../../../shared/components/Typography';
+import { useDeletePostMutation } from '../hooks/useDeletePostMutation';
+import { UserService } from '../services/UserService';
+import { useCreatePostMutation } from '../hooks/useCreatePostMutation';
 
 export const UserPostsPage = () => {
+  const { metadata, userId } = useUserPostsPageMetadata();
+  const { data, isLoading, error, setPosts } = useUserPostsQuery(userId);
+  const { handleDeletePost } = useDeletePostMutation({
+    setPosts,
+    deletePostFn: UserService.deletePost,
+    stalePosts: data,
+  });
+  const { handleCreatePost, isLoading: isCreatingPost } = useCreatePostMutation({
+    setPosts,
+    createPostFn: UserService.createPost,
+    stalePosts: data,
+    userId: userId!,
+  });
+
   const [open, setOpen] = useState(false);
   const { title, body, handleTitleChange, handleBodyChange, handleSubmit, errors } =
-    useCreatePostModalForm();
+    useCreatePostModalForm(handleCreatePost);
 
   return (
     <PageLayout>
-      <Header />
-      <main className="w-full flex flex-wrap gap-4 pt-11 overflow-y-auto">
-        <CreatePost handleOpen={() => setOpen(true)} />
-        {posts.map((post, idx) => (
-          <PostCard key={idx} data={post} />
-        ))}
-      </main>
+      {isLoading && !error && !data && (
+        <div className="w-full h-full flex items-center justify-center">
+          <Loader color="gray" />
+        </div>
+      )}
+      {!isLoading && error && (
+        <div className="w-full h-full flex items-center justify-center">
+          <Typography variant="body" className="text-faded">
+            Error loading posts
+          </Typography>
+        </div>
+      )}
+      {!isLoading && !error && data && (
+        <Fragment>
+          <Header user={metadata.user} postsCount={data?.length ?? 0} />
+          <main className="w-full flex flex-wrap gap-4 pt-11 overflow-y-auto">
+            {metadata.user ? (
+              <>
+                <CreatePost handleOpen={() => setOpen(true)} />
+                {data?.map((post, idx) => (
+                  <PostCard key={idx} data={post} onDelete={handleDeletePost} />
+                ))}
+              </>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <Loader color="gray" />
+              </div>
+            )}
+          </main>
+        </Fragment>
+      )}
       <CreatePostModal
         open={open}
         onClose={() => setOpen(false)}
         onSubmit={handleSubmit}
-        isLoading={false}
+        isLoading={isCreatingPost}
         errors={errors}
         title={title}
         body={body}

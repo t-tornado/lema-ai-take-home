@@ -13,8 +13,8 @@ const globalClassName = 'text-text-default';
 const classNameMap: Record<TypographyVariant, string> = {
   heading1: 'text-heading1',
   heading2: 'text-heading2',
-  subtitle: 'text-subtitle',
-  body: 'text-body',
+  subtitle: 'text-subtitle font-medium',
+  body: 'text-body font-normal',
   span: 'text-span',
   link: 'text-body',
 };

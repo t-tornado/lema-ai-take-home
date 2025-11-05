@@ -5,7 +5,7 @@ import {
   type CreatePostPayload,
 } from '../schemas/createPostSchema';
 
-export const useCreatePostModalForm = () => {
+export const useCreatePostModalForm = (onSubmit: (data: CreatePostPayload) => void) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [errors, setErrors] = useState<CreatePostErrors | null>(null);
@@ -17,13 +17,17 @@ export const useCreatePostModalForm = () => {
     setBody(e.target.value);
   };
 
-  const handleSubmit = (data: CreatePostPayload) => {
+  const handleSubmit = async (data: CreatePostPayload) => {
     setErrors(null);
     const result = createPostSchema.safeParse(data);
     if (!result.success) {
       setErrors(result.error.issues);
       return;
     }
+    await onSubmit(data);
+    setTitle('');
+    setBody('');
+    setErrors(null);
   };
 
   return {

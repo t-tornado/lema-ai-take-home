@@ -1,8 +1,14 @@
 import { ChevronRight } from 'lucide-react';
 import { Typography } from '../../../shared/components/Typography';
 import { useNavigate } from 'react-router-dom';
+import type { User } from '../types';
 
-export const Header = () => {
+interface HeaderProps {
+  user: User | null;
+  postsCount: number;
+}
+
+export const Header = ({ user, postsCount }: HeaderProps) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -20,18 +26,18 @@ export const Header = () => {
           Users
         </Typography>
         <ChevronRight className="w-4 h-4 text-text-default" />
-        <Typography>James Sunderland</Typography>
+        <Typography>{user?.name}</Typography>
       </nav>
 
       <div>
-        <Typography variant="heading2">James Sunderland</Typography>
+        <Typography variant="heading2">{user?.name}</Typography>
       </div>
       <div className="w-full flex items-center gap-x-1">
         <Typography variant="body" className="text-faded">
-          james.sunderland@example.com
+          {user?.email}
         </Typography>
         <div className="w-2 h-2 bg-dark rounded-full" />
-        <Typography>4 posts</Typography>
+        <Typography>{postsCount} posts</Typography>
       </div>
     </header>
   );

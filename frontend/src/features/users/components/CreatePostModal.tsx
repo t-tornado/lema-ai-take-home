@@ -26,6 +26,11 @@ export const CreatePostModal = ({
   handleTitleChange,
   handleBodyChange,
 }: CreatePostModalProps) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    await onSubmit({ title, body });
+    onClose();
+  };
   return (
     <Modal
       open={open}
@@ -58,12 +63,7 @@ export const CreatePostModal = ({
           <Button variant="cancel" onClick={onClose}>
             Cancel
           </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            isLoading={isLoading}
-            onClick={() => onSubmit({ title, body })}
-          >
+          <Button variant="primary" type="submit" isLoading={isLoading} onClick={handleSubmit}>
             Publish
           </Button>
         </div>

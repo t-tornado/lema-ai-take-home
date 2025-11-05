@@ -5,7 +5,7 @@ export const useUserTableActions = () => {
   const navigate = useNavigate();
 
   const viewUserPosts = (user: User) => {
-    navigate(`/post/${user.id}`);
+    navigate(`/post/${user.id}`, { state: { user } });
   };
   return {
     viewUserPosts,
