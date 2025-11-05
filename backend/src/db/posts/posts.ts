@@ -1,5 +1,5 @@
 import { connection } from "../connection";
-import { selectPostsTemplate } from "./query-tamplates";
+import { deletePostTemplate, selectPostsTemplate } from "./query-templates";
 import { Post } from "./types";
 
 export const getPosts = (userId: string): Promise<Post[]> =>
@@ -9,5 +9,15 @@ export const getPosts = (userId: string): Promise<Post[]> =>
         reject(error);
       }
       resolve(results as Post[]);
+    });
+  });
+
+export const deletePostById = (postId: string): Promise<void> =>
+  new Promise((resolve, reject) => {
+    connection.run(deletePostTemplate, [postId], (error) => {
+      if (error) {
+        reject(error);
+      }
+      resolve();
     });
   });

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { getPosts } from "../db/posts/posts";
+import { deletePostById, getPosts } from "../db/posts/posts";
 
 const router = Router();
 
@@ -11,6 +11,12 @@ router.get("/", async (req: Request, res: Response) => {
   }
   const posts = await getPosts(userId);
   res.send(posts);
+});
+
+router.delete("/:postId", async (req: Request, res: Response) => {
+  const postId = req.params.postId;
+  await deletePostById(postId);
+  res.status(200).send();
 });
 
 export default router;
