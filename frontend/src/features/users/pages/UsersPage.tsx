@@ -1,5 +1,5 @@
-import { Typography } from '../../shared/components/Typography';
-import { UsersTable } from './components/Table';
+import { Typography } from '../../../shared/components/Typography';
+import { UsersTable } from '../components/Table';
 
 export const UsersPage = () => {
   return (

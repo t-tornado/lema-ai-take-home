@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { PageLayout } from '../../shared/components/PageLayout';
-import { CreatePost } from './components/CreatePost';
-import { Header } from './components/Header';
-import { PostCard } from './components/PostCard';
-import type { Post } from './types';
-import { CreatePostModal } from './components/CreatePostModal';
-import { useCreatePostModalForm } from './hooks/useCreatePostModalForm';
+import { PageLayout } from '../../../shared/components/PageLayout';
+import { CreatePost } from '../components/CreatePost';
+import { Header } from '../components/Header';
+import { PostCard } from '../components/PostCard';
+import type { Post } from '../types';
+import { CreatePostModal } from '../components/CreatePostModal';
+import { useCreatePostModalForm } from '../hooks/useCreatePostModalForm';
 
 const posts: Post[] = [
   {
@@ -136,7 +136,7 @@ const posts: Post[] = [
   },
 ];
 
-export const PostPage = () => {
+export const UserPostsPage = () => {
   const [open, setOpen] = useState(false);
   const { title, body, handleTitleChange, handleBodyChange, handleSubmit, errors } =
     useCreatePostModalForm();
