@@ -27,12 +27,18 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
     return dataSource.getUserByUserId(userId);
   };
 
+  const getUsersCount = async () => {
+    const count = await dataSource.getUsersCount();
+    return { count };
+  };
+
   return {
     getUsers,
     getUserPosts,
     createPost,
     deletePost,
     getUserByUserId,
+    getUsersCount,
   };
 };
 

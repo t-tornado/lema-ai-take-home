@@ -60,6 +60,7 @@ export interface UserService {
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
   getUserByUserId: (userId: string) => Promise<GetUserByUserIdResponse>;
+  getUsersCount: () => Promise<{ count: number }>;
 }
 
 export interface UserDataSource {
@@ -67,7 +68,8 @@ export interface UserDataSource {
   getUserPosts: (userId: string) => Promise<Post[]>;
   createPost: (payload: CreatePostPayload) => Promise<Post>;
   deletePost: (postId: string) => Promise<void>;
-  getUserByUserId: (userId: string) => Promise<UsGetUserByUserIdResponseer>;
+  getUserByUserId: (userId: string) => Promise<GetUserByUserIdResponse>;
+  getUsersCount: () => Promise<number>;
 }
 
 export type CreateUserServiceFn = (dataSource: UserDataSource) => UserService;
