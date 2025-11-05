@@ -5,4 +5,4 @@ import { env } from '../../dotenv';
 
 const apiClient = createAxiosApiClient(env.API_URL, requestInterceptor, responseInterceptor);
 
-export default apiClient;
+export { apiClient };
