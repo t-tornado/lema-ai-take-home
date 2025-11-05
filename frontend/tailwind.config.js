@@ -27,6 +27,7 @@ export default {
       },
       backgroundColor: {
         'page-default': '#ffffff',
+        dark: '#020618',
       },
       width: {
         '7xl': '1240px',

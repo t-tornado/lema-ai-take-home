@@ -25,7 +25,7 @@ interface IconButtonProps extends BaseButtonProps {
   position: 'before' | 'after';
 }
 
-type ButtonProps = BaseButtonProps | PaginationNavButtonProps;
+type ButtonProps = BaseButtonProps | PaginationNavButtonProps | IconButtonProps;
 
 const globalClassName = 'rounded-[6px] text-red-100';
 const classNameMap: Record<ButtonVariant, string> = {
