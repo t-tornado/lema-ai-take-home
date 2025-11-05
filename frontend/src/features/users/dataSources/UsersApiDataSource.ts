@@ -1,4 +1,10 @@
-import type { GetUsersResponse, Post, User, UserDataSource } from '../types';
+import type {
+  GetUserByUserIdResponse,
+  GetUsersCountApiResponse,
+  GetUsersResponse,
+  Post,
+  UserDataSource,
+} from '../types';
 import type { GetUsersReqPayload } from '../types';
 import type { CreatePostPayload } from '../schemas/createPostSchema';
 import { apiClient } from '../../../lib/apiClient';
@@ -24,7 +30,11 @@ const createUserDataSource = (apiClient: BaseApiClient): UserDataSource => {
   };
 
   const getUserByUserId = async (userId: string) => {
-    return apiClient?.get<User>(`/users/${userId}`);
+    return apiClient?.get<GetUserByUserIdResponse>(`/users/${userId}`);
+  };
+
+  const getUsersCount = async () => {
+    return apiClient?.get<GetUsersCountApiResponse>(`/users/count`);
   };
 
   return {
@@ -33,6 +43,7 @@ const createUserDataSource = (apiClient: BaseApiClient): UserDataSource => {
     createPost,
     deletePost,
     getUserByUserId,
+    getUsersCount,
   };
 };
 
