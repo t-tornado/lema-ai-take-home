@@ -12,7 +12,7 @@ export const Textarea = ({ label, error, ...props }: TextareaProps) => {
         </label>
       )}
       <textarea
-        className="w-full h-[141px] border border-input rounded-[8px] text-text-default bg-white text-body placeholder:text-text-faded"
+        className="w-full h-[141px] border border-faded rounded-[8px] text-text-default bg-white text-body placeholder:text-faded"
         {...props}
       />
       {error && <p className="text-red-500">{error}</p>}

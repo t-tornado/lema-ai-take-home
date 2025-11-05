@@ -35,7 +35,8 @@ const classNameMap: Record<ButtonVariant, string> = {
     'inline-flex items-center justify-center py-3 px-4 bg-white border border-cancel-btn rounded-[8px] h-9 font-medium text-text-default text-body',
   'pagination-active': 'text-text-default w-8 h-8 bg-white border border-cancel-btn',
   pagination: 'text-text-default text-body w-8 h-8 bg-white hover:bg-gray-100',
-  'pagination-nav': 'text-text-default text-body w-8 h-8 bg-white hover:bg-gray-100 text-body',
+  'pagination-nav':
+    'text-text-default text-body w-fit px-4 flex items-center justify-center h-8 bg-white hover:bg-gray-100 text-body',
 };
 
 export const Button = ({

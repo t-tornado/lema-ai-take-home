@@ -1,19 +1,13 @@
-import { Button } from '../../shared/components/Button';
-import { Input } from '../../shared/components/Input';
-import { Textarea } from '../../shared/components/Textarea';
 import { Typography } from '../../shared/components/Typography';
+import { UsersTable } from './components/Table';
 
 export const UsersPage = () => {
   return (
-    <div>
-      <Typography variant="heading1">Users Page</Typography>
-      <Button variant="primary" isLoading>
-        Primary
-      </Button>
-      <Button variant="pagination">1</Button>
-      <Button variant="pagination-active">2</Button>
-      <Input label="Name" />
-      <Textarea label="Description" />
+    <div className="!w-7xl h-full mx-auto pt-[132px] flex flex-col gap-8 pb-16">
+      <Typography variant="heading1">Users</Typography>
+      <div className="min-w-0 min-h-0 w-full h-full">
+        <UsersTable />
+      </div>
     </div>
   );
 };

@@ -5,18 +5,19 @@ export default {
     extend: {
       colors: {
         primary: '#155DFC',
+        faded: '#62748E',
         text: {
           default: '#020618',
-          faded: '#62748E',
         },
       },
       borderColor: {
         'cancel-btn': '#E2E8F0',
-        input: '#E2E8F0',
+        faded: '#E2E8F0',
       },
       textColor: {
         'cancel-btn': '#0F172B',
         default: '#020618',
+        faded: '#62748E',
       },
       fontSize: {
         heading1: '60px',
@@ -25,7 +26,10 @@ export default {
         body: '14px',
       },
       backgroundColor: {
-        'page-default': '#F8F9FA',
+        'page-default': '#ffffff',
+      },
+      width: {
+        '7xl': '1240px',
       },
     },
   },
