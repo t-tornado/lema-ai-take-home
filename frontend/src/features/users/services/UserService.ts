@@ -11,7 +11,7 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
     };
   };
 
-  const getUserPosts = async (userId: number) => {
+  const getUserPosts = async (userId: string) => {
     return dataSource.getUserPosts(userId);
   };
 
@@ -19,7 +19,7 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
     return dataSource.createPost(payload);
   };
 
-  const deletePost = async (postId: number) => {
+  const deletePost = async (postId: string) => {
     return dataSource.deletePost(postId);
   };
 
@@ -32,3 +32,8 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
 };
 
 export const UserService = createUserService(UsersApiDataSource);
+
+/**
+ *
+ * Ut architecto voluptates qui quia tenetur.
+ */

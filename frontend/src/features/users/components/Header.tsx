@@ -14,7 +14,6 @@ export const Header = ({ user, postsCount }: HeaderProps) => {
   const goBack = () => {
     navigate('/users');
   };
-  console.log('user HEADER', user);
 
   return (
     <header className="w-full flex flex-col gap-y-6">

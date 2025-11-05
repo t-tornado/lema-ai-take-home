@@ -12,7 +12,7 @@ import { Typography } from '../../../shared/components/Typography';
 
 export const UserPostsPage = () => {
   const { metadata, userId } = useUserPostsPageMetadata();
-  const { data, isLoading, error } = useUserPostsQuery(userId);
+  const { data, isLoading, error, handleDeletePost } = useUserPostsQuery(userId);
 
   const [open, setOpen] = useState(false);
   const { title, body, handleTitleChange, handleBodyChange, handleSubmit, errors } =
@@ -40,7 +40,7 @@ export const UserPostsPage = () => {
               <>
                 <CreatePost handleOpen={() => setOpen(true)} />
                 {data?.map((post, idx) => (
-                  <PostCard key={idx} data={post} />
+                  <PostCard key={idx} data={post} onDelete={handleDeletePost} />
                 ))}
               </>
             ) : (
