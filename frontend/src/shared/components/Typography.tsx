@@ -16,7 +16,7 @@ interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement> {
   className?: string;
 }
 
-const globalClassName = 'text-text-primary';
+const globalClassName = 'text-text-default';
 
 const classNameMap: Record<TypographyVariant, string> = {
   heading1: 'text-heading1',
