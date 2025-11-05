@@ -9,14 +9,28 @@ import { useUserPostsPageMetadata } from '../hooks/useUserPostsPage';
 import { Loader } from '../../../shared/components/Loader';
 import { useUserPostsQuery } from '../hooks/useUserPostsQuery';
 import { Typography } from '../../../shared/components/Typography';
+import { useDeletePostMutation } from '../hooks/useDeletePostMutation';
+import { UserService } from '../services/UserService';
+import { useCreatePostMutation } from '../hooks/useCreatePostMutation';
 
 export const UserPostsPage = () => {
   const { metadata, userId } = useUserPostsPageMetadata();
-  const { data, isLoading, error, handleDeletePost } = useUserPostsQuery(userId);
+  const { data, isLoading, error, setPosts } = useUserPostsQuery(userId);
+  const { handleDeletePost } = useDeletePostMutation({
+    setPosts,
+    deletePostFn: UserService.deletePost,
+    stalePosts: data,
+  });
+  const { handleCreatePost, isLoading: isCreatingPost } = useCreatePostMutation({
+    setPosts,
+    createPostFn: UserService.createPost,
+    stalePosts: data,
+    userId: userId!,
+  });
 
   const [open, setOpen] = useState(false);
   const { title, body, handleTitleChange, handleBodyChange, handleSubmit, errors } =
-    useCreatePostModalForm();
+    useCreatePostModalForm(handleCreatePost);
 
   return (
     <PageLayout>
@@ -55,7 +69,7 @@ export const UserPostsPage = () => {
         open={open}
         onClose={() => setOpen(false)}
         onSubmit={handleSubmit}
-        isLoading={false}
+        isLoading={isCreatingPost}
         errors={errors}
         title={title}
         body={body}
