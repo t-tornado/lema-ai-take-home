@@ -8,7 +8,10 @@ export const useUserPostsPageMetadata = () => {
   const { state } = useLocation();
   const [fetchUser, setFetchUser] = useState(false);
   const [metadata, setMetadata] = useState<{ user: User | null }>({ user: null });
-  const { data, isLoading, error } = useGetUserQuery({ userId: userId ?? '', enabled: fetchUser });
+  const { data, isLoading, error, refetch } = useGetUserQuery({
+    userId: userId ?? '',
+    enabled: fetchUser,
+  });
 
   useEffect(() => {
     console.log('state', state);
@@ -29,5 +32,5 @@ export const useUserPostsPageMetadata = () => {
     }
   }, [data]);
 
-  return { metadata, userId, isLoading, error };
+  return { metadata, userId, isLoading, error, refetch };
 };

@@ -21,7 +21,7 @@ body {
   overflow: hidden;
 }
 
-/* .lds-ellipsis,
+.lds-ellipsis,
 .lds-ellipsis div {
   box-sizing: border-box;
 }
@@ -79,4 +79,4 @@ body {
   100% {
     transform: translate(24px, 0);
   }
-} */
+}

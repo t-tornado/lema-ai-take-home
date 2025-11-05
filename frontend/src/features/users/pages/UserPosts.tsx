@@ -12,6 +12,7 @@ import { Typography } from '../../../shared/components/Typography';
 import { useDeletePostMutation } from '../hooks/useDeletePostMutation';
 import { UserService } from '../services/UserService';
 import { useCreatePostMutation } from '../hooks/useCreatePostMutation';
+import { Button } from '../../../shared/components/Button';
 
 export const UserPostsPage = () => {
   const {
@@ -19,8 +20,10 @@ export const UserPostsPage = () => {
     userId,
     isLoading: isFetchingUser,
     error: userError,
+    refetch: refetchUser,
   } = useUserPostsPageMetadata();
-  const { data, isLoading, error, setPosts } = useUserPostsQuery(userId);
+
+  const { data, isLoading, error, setPosts, refetch: refetchPosts } = useUserPostsQuery(userId);
   const { handleDeletePost } = useDeletePostMutation({
     setPosts,
     deletePostFn: UserService.deletePost,
@@ -33,13 +36,22 @@ export const UserPostsPage = () => {
     userId: userId!,
   });
 
+  const reloadPage = () => {
+    if (userError || !metadata.user) {
+      refetchUser();
+    }
+    if (error && !data?.length) {
+      refetchPosts();
+    }
+  };
+
   const [open, setOpen] = useState(false);
   const { title, body, handleTitleChange, handleBodyChange, handleSubmit, errors } =
     useCreatePostModalForm(handleCreatePost);
 
-  const dataIsLoading = (isLoading && !error && !data) || isFetchingUser;
-  const dataIsReady = !dataIsLoading && !userError && metadata.user;
-  const dataError = !dataIsLoading && userError && !metadata.user;
+  const dataIsLoading = (isLoading || isFetchingUser) && !error && !data?.length;
+  const dataError = (!dataIsLoading && (userError || error)) || !metadata.user;
+  const dataIsReady = !dataIsLoading && !dataError && metadata.user && data?.length;
 
   return (
     <PageLayout>
@@ -49,10 +61,13 @@ export const UserPostsPage = () => {
         </div>
       )}
       {dataError && (
-        <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full h-full flex flex-col items-center justify-center">
           <Typography variant="body" className="text-faded">
             Error loading posts
           </Typography>
+          <Button variant="primary" onClick={reloadPage} className="bg-red-500">
+            Try Again
+          </Button>
         </div>
       )}
       {dataIsReady && (
