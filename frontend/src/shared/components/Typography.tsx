@@ -7,7 +7,7 @@ type TypographyVariant =
   | 'heading4'
   | 'heading5'
   | 'heading6'
-  | 'paragraph'
+  | 'body'
   | 'span';
 
 interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -25,7 +25,7 @@ const classNameMap: Record<TypographyVariant, string> = {
   heading4: 'text-heading4',
   heading5: 'text-heading5',
   heading6: 'text-heading6',
-  paragraph: 'text-paragraph',
+  body: 'text-paragraph',
   span: 'text-span',
 };
 
@@ -36,18 +36,18 @@ const variantMap: Record<TypographyVariant, React.ElementType> = {
   heading4: 'h4',
   heading5: 'h5',
   heading6: 'h6',
-  paragraph: 'p',
+  body: 'p',
   span: 'span',
 };
 
 export const Typography = ({
   children,
-  variant = 'paragraph',
+  variant = 'body',
   className,
   ...props
 }: TypographyProps) => {
-  const Component = variantMap[variant ?? 'paragraph'];
-  const classNames = cn(globalClassName, classNameMap[variant ?? 'paragraph'], className);
+  const Component = variantMap[variant ?? 'body'];
+  const classNames = cn(globalClassName, classNameMap[variant ?? 'body'], className);
 
   return (
     <Component className={classNames} {...props}>

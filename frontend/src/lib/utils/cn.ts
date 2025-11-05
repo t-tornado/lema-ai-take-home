@@ -16,12 +16,7 @@ const twMerge = extendTailwindMerge({
         'text-paragraph',
         'text-span',
       ],
-      'text-color': [
-        'text-text-default',
-        'text-text-primary',
-        'text-text-faded',
-        'text-cancel-btn',
-      ],
+      'text-color': ['text-text-default', 'text-faded', 'text-cancel-btn'],
     },
   },
 });

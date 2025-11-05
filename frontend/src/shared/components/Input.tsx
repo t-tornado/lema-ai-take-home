@@ -14,7 +14,7 @@ export const Input = ({ label, error, ...props }: InputProps) => {
       )}
       <input
         type="text"
-        className="w-full h-10 border border-input rounded-[8px] text-text-default bg-white text-body placeholder:text-text-faded"
+        className="w-full h-10 border border-faded rounded-[8px] text-text-default bg-white text-body placeholder:text-faded"
         {...props}
       />
       {error && <p className="text-red-500">{error}</p>}
