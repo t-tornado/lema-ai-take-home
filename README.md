@@ -1,111 +1,187 @@
-# Web Developer Assignment
+# Users & Posts Management Application
 
-This full-stack assignment involves building a user management system where developers must extend a Node.js/SQLite backend for user and post operations, and create a React/TypeScript frontend that displays user data in a paginated table and allows for post management, all while following provided design specifications.
+A full-stack application for managing users and their posts, built with React (frontend) and Express.js (backend).
 
+## Overview
 
-## Backend
+This is a monorepo containing two interconnected applications:
 
-### Provided Backend
+- **Frontend** (`/frontend`) - React SPA for user interface
+- **Backend** (`/backend`) - RESTful API server for data management
 
-A Node server written in TypeScript is provided.
-The server utilizes an SQLite database (data.db) containing all relevant data, including users posts and addresses.
-The server exposes several partial RESTful API endpoints:
+The frontend consumes the backend API to provide a complete user and post management system with features like pagination, CRUD operations, and real-time data updates.
 
-User Endpoints:
-- `GET /users` -  Returns a list of users with pagination support. (e.g., /users?pageNumber=0&pageSize=10).
-- `GET /users/count` - Returns the total number of users.
-Post Endpoint:
-- `GET /posts` - Returns posts filtered by a specific user ID, using the userId query parameter (e.g., /posts?userId={userId}).
+## Architecture
 
-### Backend Requirements
+### How Frontend and Backend Work Together
 
-You are required to implement the following backend functionalities:
+```
+┌─────────────────┐         HTTP/REST         ┌─────────────────┐
+│                 │ ◄──────────────────────► │                 │
+│    Frontend     │      API Requests         │     Backend      │
+│   (React SPA)   │      (Axios Client)       │  (Express API)   │
+│                 │                           │                 │
+│  Port: 5173    │                           │  Port: 3001     │
+│  (Vite Dev)     │                           │  (Express)      │
+└─────────────────┘                           └─────────────────┘
+                                                       │
+                                                       ▼
+                                              ┌─────────────────┐
+                                              │   SQLite DB      │
+                                              │   (data.db)      │
+                                              └─────────────────┘
+```
 
-- **Address to User**
-  - Extend the existing user-related endpoints to include address (metadata associated with the user).
-  - Query the address from the database and include them in the user response.
-  - Ensure the address are properly validated and formatted before returning to the frontend.
-- **Post Deletion**
-  - Create an endpoint to delete a post by its ID.
-  - Remove the post from the database upon successful deletion.
-  - Return appropriate HTTP status codes and messages.
-- **Add a New Post**
-  - Create an endpoint to add a new post for a user, accepting **Title**, **Body**, and **User ID**.
-  - Validate input data and handle errors.
-  - Save the new post to the database upon success.
+**Key Integration Points:**
 
-## Front-End
+1. **API Communication**: Frontend makes HTTP requests to backend endpoints using Axios
+2. **CORS Configuration**: Backend is configured to accept requests from the frontend origin
+3. **Data Flow**: Frontend → API Client → Backend → Database → Backend → Frontend
+4. **State Management**: Frontend uses React Query to cache and manage server state
+5. **Error Handling**: Consistent error response format between frontend and backend
 
-### General Requirements
+### Data Flow
 
-- Implement the web UI using **TypeScript**, **React**, **React Query**, and **Tailwind CSS**.
-- Follow the **Tailwind** and **shadcn/ui** design tokens (defined in Figma) for consistent styling.
-- Follow the **Figma design** provided in the Resources section.
-- Ensure **graceful handling of API errors** or unexpected data from the backend.
-- Components and pages should have **error and loading states**.
-- Emphasize **code reusability** and **separation of concerns** in your components.
+1. **User Action** → Frontend component triggers an action
+2. **API Call** → React Query hook calls the API client
+3. **HTTP Request** → Axios sends request to backend endpoint
+4. **Backend Processing** → Express routes handle request, validate, query database
+5. **Response** → Backend returns JSON response
+6. **State Update** → React Query updates frontend state and UI
 
-### Users Table
+## Quick Start
 
-- Set up an internal API that fetches a list of users from your backend API, using the pagination.
-- Display the users in an organized table with the following features:
-  - **Pagination**: Show 4 users per page.
-  - **User Details**:
-    - Full Name
-    - Email Address
-    - Address formatted as "street, state, city, zipcode". Keep the address column at 392px width and use ellipsis (...) for any overflow.
+### Prerequisites
 
-### User Posts
+- **Node.js**: v18+ (recommended: v20+)
+- **npm**: v9+
 
-- When clicking on a user row, navigate to a new page that displays a list of the user's posts.
-- Fetch the user's posts from your backend API.
-- The page should include:
-  - A header with a summary of the user and the number of posts.
-  - A list of all posts (**no pagination required**).
-  - Each post should display:
-    - **Title**
-    - **Body**
-    - A **Delete** icon.
-      - Clicking the Delete icon should delete the post via your backend API and update the UI accordingly.
-  - An option to **add a new post**:
-    - Include a button that opens a form to create a new post with **Title** and **Body** fields.
-    - Upon submission, the new post should be saved via your backend API and appear in the list of posts without requiring a page refresh.
-- Ensure the design is intuitive and posts are easily readable by closely following the provided Figma design.
+### Running the Full Stack
 
-## Guidelines
+**⚠️ Important**: Always start the backend first, then the frontend.
 
-1. **State Management with React Query**
-   - Use React Query to manage server state.
-   - Ensure efficient data fetching, caching, and synchronization with the backend.
-   - Utilize React Query's features to handle loading and error states.
-2. **Code Reusability and Separation**
-   - Structure your components to promote reusability and maintainability.
-   - Abstract shared logic into custom hooks or utility functions where appropriate.
-   - Follow best practices for component composition and props management.
-3. **Responsiveness**
-   - Ensure the application is responsive and functions well on various screen sizes and devices.
-   - Use Tailwind CSS utilities to create responsive layouts.
-4. **Error Handling**
-   - Implement robust error handling for API requests and unexpected data.
-   - Provide meaningful feedback to the user in case of errors.
-   - Use try-catch blocks and handle promise rejections appropriately in your backend.
+1. **Start the Backend:**
 
-## Resources
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   ```
 
-- **Backend Server**: A partially implemented Node server in TypeScript will be provided. You are expected to complete the specified backend functionalities.
-- **SQLite Database**: The backend uses the `data.db` SQLite database, which contains all necessary data.
-- **Figma Design**: Follow the design specifications outlined in the provided Figma file.
-  [Figma Design for Web UI](https://www.figma.com/design/Wkbz27sGWBOFMDocOck4mm/Full-Stack-Developer-Assignment?node-id=0-1&node-type=canvas&t=zK4X8qKaPmxu84XZ-0)
+   Backend will run on `http://localhost:3001`
 
-## Deliverables
+2. **Start the Frontend** (in a new terminal):
 
-- A full-stack application that meets the above requirements.
-- Source code organized and documented for readability.
-- Completed backend functionalities as specified.
-- At least one unit test demonstrating testing of a component or functionality.
-- Instructions on how to run the application locally, including setting up the backend and frontend.
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-## Submission Instructions
+   Frontend will run on `http://localhost:5173` (or next available port)
 
-- **Code Repository**: Provide access to your code via a Git repository (e.g., GitHub, GitLab).
-- **Readme File**: Include a `README.md` file with instructions on how to install dependencies, set up the database, run migrations (if any), and start both the backend and frontend servers.
+3. **Access the Application:**
+
+   Open `http://localhost:5173` in your browser
+
+### Environment Configuration
+
+**Backend:**
+
+- Configuration in `backend/config/default.json`
+- Default port: `3001`
+- Database path: `./data.db`
+
+**Frontend:**
+
+- Create `frontend/.env` file:
+  ```env
+  VITE_API_URL=http://localhost:3001
+  ```
+- This tells the frontend where to find the backend API
+
+## Project Structure
+
+```
+.
+├── backend/          # Express.js API server
+│   ├── src/         # Source code
+│   ├── config/      # Configuration files
+│   └── README.md    # Detailed backend documentation
+│
+├── frontend/         # React application
+│   ├── src/         # Source code
+│   └── README.md    # Detailed frontend documentation
+│
+└── README.md         # This file
+```
+
+## Development
+
+### Running Tests
+
+**Backend Tests:**
+
+```bash
+cd backend
+npm test
+```
+
+**Frontend Tests:**
+
+```bash
+cd frontend
+npm test              # Unit tests (Vitest)
+npm run test:cy       # Component tests (Cypress)
+```
+
+### Building for Production
+
+**Backend:**
+
+```bash
+cd backend
+npm run build
+npm start
+```
+
+**Frontend:**
+
+```bash
+cd frontend
+npm run build
+```
+
+Built files will be in `frontend/dist/` (ready for deployment to Netlify or similar)
+
+## Technology Stack
+
+### Frontend
+
+- React 19, TypeScript, Vite
+- TanStack React Query (server state)
+- React Router (routing)
+- Tailwind CSS (styling)
+- Axios (HTTP client)
+
+### Backend
+
+- Node.js, Express.js, TypeScript
+- SQLite3 (database)
+- Jest + Supertest (testing)
+
+## Documentation
+
+For detailed information about each application:
+
+- **[Frontend Documentation](./frontend/README.md)** - React app architecture, features, and setup
+- **[Backend Documentation](./backend/README.md)** - API architecture, endpoints, and setup
+
+## Key Features
+
+- **User Management**: Browse paginated list of users with addresses
+- **Post Management**: View, create, and delete posts per user
+- **Real-time Updates**: Optimistic UI updates with React Query
+- **Type Safety**: Full TypeScript across frontend and backend
+- **Error Handling**: Consistent error handling and user feedback
+- **Responsive Design**: Mobile-friendly UI with Tailwind CSS
