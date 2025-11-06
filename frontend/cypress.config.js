@@ -10,5 +10,13 @@ export default defineConfig({
     },
     specPattern: 'src/**/*.{cy,test}.{jsx,tsx}',
     supportFile: false,
+    setupNodeEvents(on, config) {
+      on('task', {
+        log(message) {
+          console.log(message); // This logs to the Node.js terminal
+          return null; // Tasks must return a value or null
+        },
+      });
+    },
   },
 });
