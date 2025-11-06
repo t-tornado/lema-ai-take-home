@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "prepare": "husky"
+    "prepare": "node -e \"if (!process.env.CI) { try { require('child_process').execSync('husky', { stdio: 'ignore' }) } catch(e) {} }\""
   },
   "devDependencies": {
     "husky": "^9.1.7"
