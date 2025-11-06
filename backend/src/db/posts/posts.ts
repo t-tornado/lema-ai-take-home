@@ -1,3 +1,4 @@
+import { idHelper } from "../../utils/idHelper";
 import { connection } from "../connection";
 import {
   createPostTemplate,
@@ -28,14 +29,9 @@ export const deletePostById = (postId: string): Promise<void> =>
 
 export const createPost = (payload: CreatePostPayload): Promise<any> =>
   new Promise((resolve, reject) => {
-    const generateId = (): string => {
-      return Array.from(crypto.getRandomValues(new Uint8Array(16)))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-    };
+    const newId = idHelper.generate();
 
-    const newId = generateId();
-    connection.run(
+    connection.get(
       createPostTemplate,
       [
         newId,
@@ -44,21 +40,11 @@ export const createPost = (payload: CreatePostPayload): Promise<any> =>
         payload.user_id,
         new Date().toISOString(),
       ],
-      function (error) {
+      function (error, result) {
         if (error) {
           reject(error);
         }
-        connection.get(
-          "SELECT * FROM posts WHERE id = ?",
-          [this.lastID],
-          (err, row) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            resolve(row as Post);
-          }
-        );
+        resolve(result as Post);
       }
     );
   });
