@@ -8,7 +8,6 @@
     "build": "tsc -b tsconfig.build.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:cy": "cypress run --component",
