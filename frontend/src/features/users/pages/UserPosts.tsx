@@ -50,19 +50,25 @@ export const UserPostsPage = () => {
   const { title, body, handleTitleChange, handleBodyChange, handleSubmit, errors } =
     useCreatePostModalForm(handleCreatePost);
 
-  const dataIsLoading = (isLoading || isFetchingUser) && !error && !data?.length;
-  const dataError = (!dataIsLoading && (userError || error)) || !metadata.user;
-  const dataIsReady = !dataIsLoading && !dataError && metadata.user && data?.length;
+  const dataIsLoading = Boolean((isLoading || isFetchingUser) && !error && !data?.length);
+  const dataError = Boolean(!dataIsLoading && (userError || error) && !metadata.user);
+  const dataIsReady = Boolean(!dataIsLoading && !dataError && metadata.user && data);
 
   return (
     <PageLayout>
       {dataIsLoading && (
-        <div className="w-full h-full flex items-center justify-center">
+        <div
+          data-testid="data-is-loading"
+          className="w-full h-full flex items-center justify-center"
+        >
           <Loader color="gray" />
         </div>
       )}
       {dataError && (
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div
+          data-testid="data-error"
+          className="w-full h-full flex flex-col items-center justify-center"
+        >
           <Typography variant="body" className="text-faded">
             Error loading posts
           </Typography>

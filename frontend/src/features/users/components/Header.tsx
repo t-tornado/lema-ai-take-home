@@ -16,7 +16,10 @@ export const Header = ({ user, postsCount }: HeaderProps) => {
   };
 
   return (
-    <header className="w-full flex flex-col gap-y-2.5 lg:gap-y-6 px-5">
+    <header
+      data-testid="user-posts-header"
+      className="w-full flex flex-col gap-y-2.5 lg:gap-y-6 px-5"
+    >
       <nav className="w-fit flex items-center gap-x-1">
         <Typography
           variant="link"
