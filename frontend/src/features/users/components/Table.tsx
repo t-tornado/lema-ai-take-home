@@ -22,13 +22,6 @@ export const UsersTable = () => {
   const dataIsReady = !!(!dataIsLoading && !dataIsError && (data?.length ?? 0) > 0);
   const dataIsEmpty = !dataIsLoading && !dataIsError && (data?.length ?? 0) === 0;
 
-  console.log({
-    dataIsReady,
-    dataIsLoading,
-    dataIsError,
-    data,
-  });
-
   const getAddressStr = useCallback((user: User) => {
     const address = user.address;
     if (!address) return '';

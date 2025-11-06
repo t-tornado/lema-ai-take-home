@@ -4,7 +4,7 @@ import postsRouter from "./routes/posts";
 import usersRouter from "./routes/users";
 const port = config.get("port") as number;
 
-const app: Application = express();
+export const app: Application = express();
 app.use(json());
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
