@@ -4,7 +4,7 @@ import { UsersTable } from '../components/Table';
 
 export const UsersPage = () => {
   return (
-    <PageLayout>
+    <PageLayout data-testid="users-page-root">
       <Typography variant="heading1" className="px-5 text-3xl lg:text-heading1">
         Users
       </Typography>

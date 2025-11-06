@@ -7,7 +7,6 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
     const data = (await dataSource.getUsers(payload)) as unknown as User[];
     return {
       data,
-      totalUsers: data.length,
     };
   };
 
