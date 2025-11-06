@@ -59,6 +59,11 @@ export const useUsersTableQuery = () => {
     }
   }, [usersCount]);
 
+  console.log({
+    resData,
+    usersCount,
+  });
+
   return {
     data: resData?.data,
     isLoading,

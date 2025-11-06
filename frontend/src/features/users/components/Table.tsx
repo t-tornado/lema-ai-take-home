@@ -8,14 +8,26 @@ import { Pagination } from './Pagination';
 import { Button } from '../../../shared/components/Button';
 
 export const UsersTable = () => {
-  const { data, isLoading, error, handlePageNumberChange, paginationState, refetchData } =
-    useUsersTableQuery();
+  const {
+    data,
+    isLoading: dataIsLoading,
+    error,
+    handlePageNumberChange,
+    paginationState,
+    refetchData,
+  } = useUsersTableQuery();
   const { viewUserPosts } = useUserTableActions();
 
-  const dataIsLoading = isLoading;
   const dataIsError = error;
-  const dataIsReady = !dataIsLoading && !dataIsError && (data?.length ?? 0) > 0;
+  const dataIsReady = !!(!dataIsLoading && !dataIsError && (data?.length ?? 0) > 0);
   const dataIsEmpty = !dataIsLoading && !dataIsError && (data?.length ?? 0) === 0;
+
+  console.log({
+    dataIsReady,
+    dataIsLoading,
+    dataIsError,
+    data,
+  });
 
   const getAddressStr = useCallback((user: User) => {
     const address = user.address;
@@ -25,7 +37,7 @@ export const UsersTable = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col" data-testid="users-table-root">
       <div className="w-full relative min-h-0 border border-separate border-faded border-solid rounded-[8px] overflow-y-auto">
         <table className="w-full h-auto table-auto">
           <thead className="h-11 sticky top-0 bg-white z-10">
@@ -37,7 +49,7 @@ export const UsersTable = () => {
           </thead>
           <tbody className="h-auto overflow-y-auto">
             {dataIsLoading && (
-              <tr>
+              <tr data-testid="users-table-loading-row">
                 <td colSpan={3} className="h-[200px]">
                   <div className="h-full flex items-center justify-center">
                     <Loader color="gray" />
@@ -48,6 +60,7 @@ export const UsersTable = () => {
             {dataIsReady &&
               data?.map((user: User) => (
                 <tr
+                  data-testid="users-table-user-row"
                   onClick={() => viewUserPosts(user)}
                   key={user.id}
                   className="!h-11 cursor-pointer hover:bg-gray-100 border-b border-faded border-solid"
@@ -56,13 +69,16 @@ export const UsersTable = () => {
                   <td className="text-text-default text-body text-left p-3 truncate">
                     {user.email}
                   </td>
-                  <td className="text-text-default text-body text-left p-3 max-w-[392px] truncate">
+                  <td
+                    data-testid="users-table-user-address-cell"
+                    className="text-text-default text-body text-left p-3 max-w-[392px] truncate"
+                  >
                     {getAddressStr(user)}
                   </td>
                 </tr>
               ))}
             {dataIsEmpty && (
-              <tr>
+              <tr data-testid="users-empty-row">
                 <td colSpan={3} className="h-[200px]">
                   <div className="h-full flex gap-y-2 items-center justify-center">
                     <Typography variant="body" className="text-faded">
@@ -73,7 +89,7 @@ export const UsersTable = () => {
               </tr>
             )}
             {dataIsError && (
-              <tr>
+              <tr data-testid="users-table-error-row">
                 <td colSpan={3} className="h-[200px]">
                   <div className="h-full flex flex-col gap-y-2 items-center justify-center">
                     <Typography variant="body" className="text-red-300">

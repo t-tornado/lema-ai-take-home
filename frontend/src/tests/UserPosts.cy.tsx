@@ -36,8 +36,8 @@ describe('<UserPostsPage />', () => {
   it('shows loader while loading', () => {
     const userId = '1';
 
-    cy.intercept('GET', `**/users/${userId}`, { delay: 100000 }).as('getUser');
-    cy.intercept('GET', `**/posts?userId=${userId}`, { delay: 5000 }).as('getPosts');
+    cy.intercept('GET', `**/users/${userId}`, { delay: 100000 });
+    cy.intercept('GET', `**/posts?userId=${userId}`, { delay: 5000 });
 
     mountComponent(userId);
 

@@ -46,7 +46,6 @@ export interface GetUsersReqPayload {
 
 export interface GetUsersResponse {
   data: User[];
-  totalUsers: number;
 }
 
 export interface GetUserByUserIdResponse {
