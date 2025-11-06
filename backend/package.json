@@ -16,7 +16,7 @@
     "start": "node dist/index.js",
     "dev": "nodemon",
     "dev:once": "ts-node src/index.ts",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "devDependencies": {
     "@types/config": "^3.3.5",
