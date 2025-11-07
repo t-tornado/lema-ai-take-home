@@ -35,6 +35,7 @@ export const Textarea = ({
         className={cn(
           'w-full h-[141px] border border-faded rounded-[8px] py-2 px-3 text-text-default bg-white text-body placeholder:text-faded',
           className,
+          error && 'border-red-500',
         )}
         {...props}
       />

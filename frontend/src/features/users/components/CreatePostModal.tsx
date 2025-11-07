@@ -4,6 +4,7 @@ import { Input } from '../../../shared/components/Input';
 import { Textarea } from '../../../shared/components/Textarea';
 import { Button } from '../../../shared/components/Button';
 import type { CreatePostErrors, CreatePostFormPayload } from '../schemas/createPostSchema';
+
 interface CreatePostModalProps {
   open: boolean;
   onClose: () => void;
@@ -29,14 +30,18 @@ export const CreatePostModal = ({
   handleBodyChange,
   onSuccess,
   onError,
+  errors,
 }: CreatePostModalProps) => {
+  const titleErrors = errors?.issues.find((issue) => issue.path[0] === 'title');
+  const bodyErrors = errors?.issues.find((issue) => issue.path[0] === 'body');
+
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
       await onSubmit({ title, body });
       onSuccess?.();
       onClose();
-    } catch (error) {
+    } catch (error: unknown) {
       onError?.(error);
     }
   };
@@ -51,6 +56,7 @@ export const CreatePostModal = ({
       </Typography>
       <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
         <Input
+          error={titleErrors?.message}
           id="post-title"
           label="Post Title"
           placeholder="Enter title"
@@ -60,6 +66,7 @@ export const CreatePostModal = ({
           onChange={handleTitleChange}
         />
         <Textarea
+          error={bodyErrors?.message}
           id="post-body"
           label="Post Body"
           placeholder="Enter body"

@@ -28,7 +28,7 @@ export const getUsers = (
   new Promise((resolve, reject) => {
     connection.all<UserWithAddressRow>(
       selectUsersWithAddressesTemplate,
-      [pageNumber * pageSize, pageSize],
+      [(pageNumber - 1) * pageSize, pageSize],
       (error, results) => {
         if (error) {
           reject(error);

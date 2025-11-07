@@ -2,14 +2,15 @@ import { useMemo } from 'react';
 import { Button } from '../../../shared/components/Button';
 import { getUsersTablePageNumbers } from '../utils/getUsersTablePageNumbers';
 import { Typography } from '../../../shared/components/Typography';
+import type { UsersTablePaginationState } from '../types';
 
 interface PaginationProps {
-  pageNumber: number;
   handlePageNumberChange: (pageNumber: number) => void;
-  totalPages: number;
+  paginationState: UsersTablePaginationState;
 }
 
-export const Pagination = ({ pageNumber, handlePageNumberChange, totalPages }: PaginationProps) => {
+export const Pagination = ({ handlePageNumberChange, paginationState }: PaginationProps) => {
+  const { pageNumber, totalPages } = paginationState;
   const hasPreviousPage = pageNumber > 1;
   const hasNextPage = pageNumber < totalPages;
 

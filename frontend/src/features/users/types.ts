@@ -76,7 +76,7 @@ export type CreateUserServiceFn = (dataSource: UserDataSource) => UserService;
 export interface UsersTablePaginationState {
   pageNumber: number;
   pageSize: number;
-  totalUsers: number;
+  totalPages: number;
 }
 
 export interface GetUsersCountApiResponse {

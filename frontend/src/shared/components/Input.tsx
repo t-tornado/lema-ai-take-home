@@ -36,6 +36,7 @@ export const Input = ({
         className={cn(
           'w-full h-10 py-2.5 px-3 border border-faded rounded-lg text-text-default bg-white text-body placeholder:text-faded',
           className,
+          error && 'border-red-500',
         )}
         {...props}
       />
