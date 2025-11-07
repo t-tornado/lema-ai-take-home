@@ -1,3 +1,5 @@
+import { Router } from "express";
+
 export interface BaseError {
   type: string;
   field: string;
@@ -26,3 +28,14 @@ export type ServerError =
   | ValidationError
   | NotFoundError
   | InternalServerError;
+
+export interface AppConfig {
+  port: number;
+  startMessage?: (port: number) => string;
+}
+
+export type AppRoutes = Record<string, Router>;
+
+export interface App {
+  start: () => void;
+}

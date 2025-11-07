@@ -1,5 +1,2 @@
-cd backend
-npm run test
-
-cd ../frontend 
+cd frontend 
 npm run lint

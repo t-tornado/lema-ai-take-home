@@ -11,7 +11,11 @@ const createUserService: CreateUserServiceFn = (dataSource) => {
   };
 
   const getUserPosts = async (userId: string) => {
-    return dataSource.getUserPosts(userId);
+    const posts = await dataSource.getUserPosts(userId);
+    const sorted = posts.sort(
+      (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+    );
+    return sorted;
   };
 
   const createPost = async (payload: CreatePostPayload) => {

@@ -70,9 +70,8 @@ router.post(
         errors: [
           {
             type: "internal_server_error",
-            field: "user_id",
-            code: "required",
-            message: "UserId is required",
+            code: "server_error",
+            message: "Failed to create post",
           },
         ],
       });

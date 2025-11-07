@@ -1,24 +1,8 @@
-import express, { Application, json } from "express";
 import config from "config";
-import postsRouter from "./routes/posts";
-import usersRouter from "./routes/users";
+import { createExpressApp } from "./utils/createApp";
+import { routes } from "./routes";
 const port = config.get("port") as number;
 
-export const app: Application = express();
-app.use(json());
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+const { app, start } = createExpressApp(routes, { port });
 
-app.use("/posts", postsRouter);
-app.use("/users", usersRouter);
-
-app.listen(port, () => {
-  console.log(`API server is running on port ${port}`);
-});
+start(app);

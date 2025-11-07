@@ -9,4 +9,4 @@ export type CreatePostFormPayload = z.infer<typeof createPostSchema>;
 
 export type CreatePostPayload = CreatePostFormPayload & { user_id: string };
 
-export type CreatePostErrors = z.core.$ZodIssue[];
+export type CreatePostErrors = z.ZodError;

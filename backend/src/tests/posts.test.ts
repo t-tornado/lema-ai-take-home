@@ -1,9 +1,21 @@
-import { app } from "..";
+import { Express } from "express";
 import request from "supertest";
+import { createExpressApp } from "../utils/createApp";
+import { routes } from "../routes";
 
 describe("Posts", () => {
+  let testApp: Express;
+  beforeAll(async () => {
+    const { start, app } = createExpressApp(routes, {
+      port: 4000,
+      startMessage: (port) => `TEST API server is running on port ${port}`,
+    });
+    testApp = app;
+    start(app);
+  });
+
   it("Adds a new post", async () => {
-    const server = request(app);
+    const server = request(testApp);
     const users = await server.get("/users").expect(200);
     const testUserId = users.body[0].id;
 

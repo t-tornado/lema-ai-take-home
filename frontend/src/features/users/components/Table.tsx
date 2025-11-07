@@ -100,9 +100,8 @@ export const UsersTable = () => {
       </div>
       <div className="w-full h-[60px] pb-2 flex flex-col">
         <Pagination
-          pageNumber={paginationState.pageNumber}
           handlePageNumberChange={handlePageNumberChange}
-          totalPages={paginationState.totalUsers}
+          paginationState={paginationState}
         />
       </div>
     </div>
